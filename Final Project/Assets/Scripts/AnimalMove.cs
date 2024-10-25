@@ -17,6 +17,6 @@ public class AnimalMove : MonoBehaviour
 
     public void StopMovement()
     {
-        isMoving = false; // Stop the movement of the animal/obstacle
+        isMoving = false; 
     }
 }

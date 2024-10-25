@@ -17,11 +17,11 @@ public class BackgroundMove : MonoBehaviour
 
     public void StopMovement()
     {
-        isMoving = false; // Stop the background movement
+        isMoving = false; 
     }
 
     public void StartMovement()
     {
-        isMoving = true; // Resume the background movement
+        isMoving = true; 
     }
 }

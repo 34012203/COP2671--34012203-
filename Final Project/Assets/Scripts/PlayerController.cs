@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 1f;
     public bool isOnGround = true;
     public bool gameOver = false;
-    public bool hasWon = false; // Flag to track if the player has won
+    public bool hasWon = false; 
     public GameObject projectilePrefab;
     public float projectileOffset = 1.5f;
     public float heightOffset = 1.0f;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Prevent movement and input after game ends (either win or lose)
+        
         if (!gameOver && !hasWon)
         {
             if (Input.GetKeyDown(KeyCode.J) && isOnGround)
@@ -64,20 +64,20 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
         }
-        else if (collision.gameObject.CompareTag("Obstacle") && !hasWon) // Only trigger death if player hasn't won
+        else if (collision.gameObject.CompareTag("Obstacle") && !hasWon) 
         {
             Debug.Log("Player hit an obstacle. Game Over!");
             gameOver = true;
-            TriggerDeathScene(); // Trigger death only when hitting an obstacle
+            TriggerDeathScene(); 
             EndGame(false);
         }
         else if (collision.gameObject.CompareTag("WinningItem"))
         {
             Debug.Log("Player collected the winning item! You Win!");
             gameOver = true;
-            hasWon = true; // Set hasWon to true
+            hasWon = true; 
             EndGame(true);
-            collision.gameObject.SetActive(false); // Make the winning item disappear
+            collision.gameObject.SetActive(false); 
         }
     }
 
@@ -85,10 +85,10 @@ public class PlayerController : MonoBehaviour
     {
         StopAllAnimalMovement();
         StopBackgroundMovement();
-        StopPlayerMovement(); // Stop player movement when game is over
-        StopPlayerAnimation(); // Stop player animation
+        StopPlayerMovement(); 
+        StopPlayerAnimation(); 
 
-        // Stop the timer in ScoreManager
+        
         FindObjectOfType<ScoreManager>().StopGame();
 
         FindObjectOfType<GameManager>().EndGame(playerWon);
@@ -97,37 +97,37 @@ public class PlayerController : MonoBehaviour
 
     void StopAllAnimalMovement()
     {
-        AnimalMove[] animals = FindObjectsOfType<AnimalMove>(); // Find all active animals
+        AnimalMove[] animals = FindObjectsOfType<AnimalMove>(); 
         foreach (AnimalMove animal in animals)
         {
-            animal.StopMovement(); // Stop each animal
+            animal.StopMovement(); 
         }
     }
 
     void StopBackgroundMovement()
     {
-        BackgroundMove background = FindObjectOfType<BackgroundMove>(); // Find the background movement script
+        BackgroundMove background = FindObjectOfType<BackgroundMove>(); 
         if (background != null)
         {
-            background.StopMovement(); // Stop the background
+            background.StopMovement();
         }
     }
 
     public void StopPlayerMovement()
     {
-        // Disable the Rigidbody's physics interactions and movement
-        playerRb.velocity = Vector3.zero;          // Stop any current movement
-        playerRb.angularVelocity = Vector3.zero;   // Stop any current rotation
-        playerRb.isKinematic = true;                // Make the Rigidbody kinematic (stops all physics)
-        playerRb.useGravity = false;                // Disable gravity
+        
+        playerRb.velocity = Vector3.zero;          
+        playerRb.angularVelocity = Vector3.zero;   
+        playerRb.isKinematic = true;                
+        playerRb.useGravity = false;                
 
-        // Disable player's ability to jump and shoot
-        enabled = false; // Disable the entire PlayerController script
+       
+        enabled = false; 
     }
 
     public void TriggerDeathScene()
     {
-        if (!hasWon) // Only trigger death if the player hasn't won
+        if (!hasWon) 
         {
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 2);
@@ -136,13 +136,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // New method to stop player's animation
+    
     public void StopPlayerAnimation()
     {
-        // Assuming "IsRunning" and "IsJumping" are the parameters controlling the run and jump animations
-        playerAnim.SetBool("IsRunning", false); // Stop running animation
-        playerAnim.SetBool("IsJumping", false); // Stop jumping animation
-        playerAnim.SetBool("Death_b", false); // Reset death animation if needed
+        
+        playerAnim.SetBool("IsRunning", false); 
+        playerAnim.SetBool("IsJumping", false); 
+        playerAnim.SetBool("Death_b", false); 
         playerAnim.Play("Idle");
     }
 }

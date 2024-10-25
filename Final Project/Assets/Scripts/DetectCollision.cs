@@ -22,7 +22,7 @@ public class DetectCollisions : MonoBehaviour
             Debug.Log("Player hit an obstacle. Game Over!");
             playerController.gameOver = true;
             playerController.TriggerDeathScene();
-            FindObjectOfType<GameManager>().EndGame(false); // Call GameManager to end the game with "You Lose"
+            FindObjectOfType<GameManager>().EndGame(false);
         }
     }
 

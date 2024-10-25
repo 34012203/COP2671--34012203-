@@ -1,7 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class ScoreManager : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class ScoreManager : MonoBehaviour
     public int score = 0;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI gameOverText; // Reference to the Game Over text UI
-    public TextMeshProUGUI youWinText; // Reference to the "You Win" text UI
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI youWinText;
+    public Button restartButton; 
     public int countdownTime = 60;
+
     private bool isGameOver = false;
     private bool timerRunning = true;
 
@@ -21,16 +24,16 @@ public class ScoreManager : MonoBehaviour
 
     void Start()
     {
-        // Initialize score and start the countdown
+        
         UpdateScore(0);
         StartCoroutine(CountdownTimer());
 
-        // Find references to other components
+        
         playerController = FindObjectOfType<PlayerController>();
         spawnManager = FindObjectOfType<SpawnManager>();
         backgroundMove = FindObjectOfType<BackgroundMove>();
 
-        // Ensure the Game Over and You Win text are hidden at the start
+        
         if (gameOverText != null)
         {
             gameOverText.gameObject.SetActive(false);
@@ -39,16 +42,22 @@ public class ScoreManager : MonoBehaviour
         {
             youWinText.gameObject.SetActive(false);
         }
+
+       
+        if (restartButton != null)
+        {
+            restartButton.gameObject.SetActive(false);
+        }
     }
 
     public void AddScore(int value)
     {
-        if (isGameOver) return; // Prevent adding score after the game ends
+        if (isGameOver) return; 
 
         score += value;
         UpdateScore(score);
 
-        // Check if the player has reached 45 points
+        
         if (score >= 45 && !isGameOver)
         {
             YouWin();
@@ -60,7 +69,7 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + newScore;
     }
 
-    // Coroutine for the countdown timer
+    
     IEnumerator CountdownTimer()
     {
         int timeLeft = countdownTime;
@@ -80,72 +89,90 @@ public class ScoreManager : MonoBehaviour
 
     public void StopGame()
     {
-        timerRunning = false; // Stops the countdown
-        StopAllGameplay(); // Call the method to stop gameplay elements
+        timerRunning = false; 
+        StopAllGameplay(); 
     }
 
     void GameOver()
     {
-        if (isGameOver) return; // Avoid multiple game over conditions
+        if (isGameOver) return; 
 
         isGameOver = true;
         timerText.text = "Time's up!";
         Debug.Log("Game Over!");
 
-        // Show the Game Over message
+        
         if (gameOverText != null)
         {
-            gameOverText.gameObject.SetActive(true); // Enable the Game Over text
+            gameOverText.gameObject.SetActive(true); 
         }
 
-        // Stop all gameplay elements
+        
         StopAllGameplay();
         if (playerController != null)
         {
-            playerController.StopPlayerAnimation(); // Ensure you have this method in PlayerController
+            playerController.StopPlayerAnimation(); 
+        }
+
+        
+        if (restartButton != null)
+        {
+            restartButton.gameObject.SetActive(true); 
         }
     }
 
     void YouWin()
     {
-        if (isGameOver) return; // Avoid multiple win conditions
+        if (isGameOver) return; 
 
         isGameOver = true;
-        timerRunning = false; // Stop the timer when the player wins
+        timerRunning = false; 
         Debug.Log("You Win!");
 
-        // Show the "You Win" message
+        
         if (youWinText != null)
         {
-            youWinText.gameObject.SetActive(true); // Enable the You Win text
+            youWinText.gameObject.SetActive(true); 
         }
 
-        // Stop all gameplay elements
+        
         StopAllGameplay();
         if (playerController != null)
         {
-            playerController.StopPlayerAnimation(); // Ensure you have this method in PlayerController
+            playerController.StopPlayerAnimation(); 
+        }
+
+        
+        if (restartButton != null)
+        {
+            restartButton.gameObject.SetActive(true); 
         }
     }
 
     void StopAllGameplay()
     {
-        // Stop player movement
+       
         if (playerController != null)
         {
             playerController.StopPlayerMovement();
         }
 
-        // Stop object spawning
+        
         if (spawnManager != null)
         {
             spawnManager.StopSpawning();
         }
 
-        // Stop background movement
+        
         if (backgroundMove != null)
         {
             backgroundMove.StopMovement();
         }
+    }
+
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 }

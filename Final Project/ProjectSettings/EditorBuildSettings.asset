@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Menu Screen.unity
+    guid: 11d1bd0dccef9b446a8829a2ae95694c
+  - enabled: 1
+    path: Assets/Scenes/Menu Screen.unity
+    guid: 7d2a3c253da1c794892214df15a79e59
+  - enabled: 1
+    path: Assets/Scenes/PizzaPanic.unity
+    guid: dc8c9f3efd746429fa6f9482dc779492
   m_configObjects: {}

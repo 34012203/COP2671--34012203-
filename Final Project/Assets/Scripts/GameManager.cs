@@ -4,39 +4,55 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI winText; // Reference to the UI Text component for displaying win message
-    public TextMeshProUGUI loseText; // Reference to the UI Text component for displaying lose message
-    private bool gameHasEnded = false; // Flag to track if the game has ended
+    public TextMeshProUGUI winText; 
+    public TextMeshProUGUI loseText; 
+    private bool gameHasEnded = false;
+    public Button restartButton;
 
     void Start()
     {
-        // Initially hide the win and lose messages
+        
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
+
+        if (restartButton != null)
+        {
+            restartButton.gameObject.SetActive(false);
+            restartButton.onClick.AddListener(RestartGame); // Assign the restart functionality to the button
+        }
     }
 
     public void EndGame(bool playerWon)
     {
-        if (!gameHasEnded) // Prevent multiple calls
+        if (!gameHasEnded) 
         {
             gameHasEnded = true;
 
             if (playerWon)
             {
                 Debug.Log("You Win!");
-                winText.gameObject.SetActive(true); // Show win message
-                winText.text = "You Win!"; // Display win message
+                winText.gameObject.SetActive(true); 
+                winText.text = "You Win!"; 
             }
             else
             {
                 Debug.Log("You Lose!");
-                loseText.gameObject.SetActive(true); // Show lose message
-                loseText.text = "You Lose!"; // Display lose message
+                loseText.gameObject.SetActive(true); 
+                loseText.text = "You Lose!"; 
             }
-
-            // Additional logic for ending the game can be placed here, such as restarting the game.
+            if (restartButton != null)
+            {
+                restartButton.gameObject.SetActive(true);
+            }
         }
     }
+    public void RestartGame()
+    {
+        Debug.Log("Restarting Game...");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

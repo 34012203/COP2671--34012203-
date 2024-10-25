@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] obstaclePrefabs; // Array of obstacle prefabs to spawn
+    public GameObject[] obstaclePrefabs; 
     private Vector3 spawnPos = new Vector3(25, 0, 0);
     private float startDelay = 2f;
     private float repeatRate = 2f;
-    private bool isGameOver = false; // Track if the game is over
+    private bool isGameOver = false; 
 
     void Start()
     {
@@ -17,16 +17,16 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        // If the game is over, stop the spawning
+       
         if (isGameOver)
         {
-            CancelInvoke("SpawnObstacle"); // Ensure no further calls are made
+            CancelInvoke("SpawnObstacle"); 
         }
     }
 
     void SpawnObstacle()
     {
-        if (!isGameOver) // Only spawn if the game isn't over
+        if (!isGameOver) 
         {
             int randomIndex = Random.Range(0, obstaclePrefabs.Length);
             GameObject randomObstacle = obstaclePrefabs[randomIndex];
@@ -34,17 +34,17 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    // Call this method to end the spawning
+    
     public void EndGame(bool playerWon)
     {
-        isGameOver = true; // Set game over to true
-        Debug.Log("Game Over Called"); // Debug log to ensure this is being called
+        isGameOver = true; 
+        Debug.Log("Game Over Called"); 
     }
 
-    // Public method to stop spawning
+    
     public void StopSpawning()
     {
-        isGameOver = true; // Ensure spawning is halted
-        CancelInvoke("SpawnObstacle"); // Stop any further calls to SpawnObstacle
+        isGameOver = true; 
+        CancelInvoke("SpawnObstacle"); 
     }
 }

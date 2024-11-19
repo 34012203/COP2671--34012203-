@@ -8,3 +8,4 @@ Key commands:
 
 J- jump
 Space bar - shoot pizza
+Esc - Pause the game
